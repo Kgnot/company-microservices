@@ -6,6 +6,11 @@ eureka:
     serviceUrl:
       defaultZone: http://localhost:8761/eureka/
 
+management:
+  tracing:
+    sampling:
+      probability: 1.0
+
 spring:
   application:
     name: api-gateway
@@ -17,8 +22,8 @@ spring:
         - id: employee-service
           uri: lb://employee-service
           predicates:
-            - Path=/employee/**
+            - Path=/api/v1/employee/**
         - id: department-service
           uri: lb://department-service
           predicates:
-            - Path=/department/**
+            - Path=/api/v1/department/**

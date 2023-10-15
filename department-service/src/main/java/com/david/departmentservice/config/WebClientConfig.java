@@ -20,7 +20,7 @@ public class WebClientConfig {
                 .filter(filterFunction)
                 .build();
     }
-
+    @Bean
     public EmployeeClient employeeClient(){
         HttpServiceProxyFactory httpServiceProxyFactory = HttpServiceProxyFactory
                 .builder(WebClientAdapter.forClient(employeeWebClient()))
