@@ -40,7 +40,7 @@ public class DepartmentController {
         return new ResponseEntity<Department>(department, HttpStatus.CREATED);
     }
 
-    @GetMapping("with-employees")
+    @GetMapping("/with-employees")
     public ResponseEntity<List<Department>> findAllWithEmployees(){
         List<Department> departments = departmentRepository.findAll();
 

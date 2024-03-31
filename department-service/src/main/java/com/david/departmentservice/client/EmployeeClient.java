@@ -13,7 +13,7 @@ import java.util.List;
 @HttpExchange
 public interface EmployeeClient {
 
-    @GetExchange("employee/department/{id}")
+    @GetExchange("/api/v1/employee/department/{id}")
     public List<Employee> findById(@PathVariable Long id);
 
 }
