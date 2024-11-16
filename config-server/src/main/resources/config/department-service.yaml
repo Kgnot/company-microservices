@@ -21,6 +21,11 @@ management:
     health:
       show-details: always
 
+spring:
+  cloud:
+    discovery:
+      enabled: true
+
 resilience4j:
   circuitbreaker:
     instances:

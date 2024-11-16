@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Repository
 public class DepartmentRepository {
@@ -23,7 +24,7 @@ public class DepartmentRepository {
 
     public Department findById(Long id){
         return departments.stream()
-                .filter(x -> x.getId() == id)
+                .filter(x -> Objects.equals(x.getId(), id))
                 .findFirst()
                 .orElseThrow();
     }

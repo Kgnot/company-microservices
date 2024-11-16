@@ -10,10 +10,10 @@ import org.springframework.web.service.annotation.HttpExchange;
 
 import java.util.List;
 
-@HttpExchange
+@HttpExchange("/api/v1/employee")
 public interface EmployeeClient {
 
-    @GetExchange("/api/v1/employee/department/{id}")
-    public List<Employee> findById(@PathVariable Long id);
+    @GetExchange("/department/{id}")
+    List<Employee> findById(@PathVariable Long id);
 
 }
