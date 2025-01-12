@@ -67,12 +67,14 @@ public class DepartmentController {
     }
     //If percentage of failure on this request is greater than the established is going to throw that method
     public ResponseEntity<List<Department>> fallbackCircuitBreakerFindAllWithEmployees(Exception e){
+        log.info("fallback circuit breaker find all with employees");
         List<Department> departments = departmentRepository.findAll();
 
         return ResponseEntity.ok(departments);
     }
     //If the request fails is going to retry a number of times this method
     public ResponseEntity<List<Department>> fallbackRetryFindAllWithEmployees(Exception e){
+        log.info("fallback retry find all with employees");
         List<Department> departments = departmentRepository.findAll();
 
         departments.forEach(x -> x.setEmployees(employeeClient.findById(x.getId())));
@@ -81,7 +83,7 @@ public class DepartmentController {
     }
     //If the number of request is greater than the established is going to throw that method
     public ResponseEntity<List<Department>> fallbackRateLimiterFindAllWithEmployees(Exception e){
-
+        log.info("fallback rate limiter find all with employees");
         return new ResponseEntity<>(HttpStatus.TOO_MANY_REQUESTS);
     }
 
@@ -94,7 +96,7 @@ public class DepartmentController {
     //If the number of request is greater than the established is going to throw that method
     // or if the thread pool and also the waiting queue are full, depends of the implementation used
     public ResponseEntity<List<Department>> fallbackBulkheadFindAllWithEmployees(Exception e){
-
+        log.info("fallback bulk head find all with employees");
         return new ResponseEntity<>(HttpStatus.TOO_MANY_REQUESTS);
     }
 
