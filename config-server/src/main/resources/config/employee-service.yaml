@@ -15,3 +15,10 @@ spring:
   cloud:
     discovery:
       enabled: true
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: company
+      username: company
+      password: password

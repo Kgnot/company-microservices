@@ -1,5 +1,5 @@
 server:
-  port: 8081
+  port: 8083
 
 eureka:
   client:
@@ -25,6 +25,13 @@ spring:
   cloud:
     discovery:
       enabled: true
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: company
+      username: company
+      password: password
 
 resilience4j:
   circuitbreaker:

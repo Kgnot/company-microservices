@@ -8,6 +8,7 @@ import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import io.github.resilience4j.retry.annotation.Retry;
 import io.github.resilience4j.timelimiter.annotation.TimeLimiter;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,14 +19,15 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/department")
+@RequiredArgsConstructor
 @Slf4j
 public class DepartmentController {
 
     public static final String DEPARTMENT_SERVICE = "departmentService";
-    @Autowired
-    private DepartmentRepository departmentRepository;
-    @Autowired
-    private EmployeeClient employeeClient;
+
+    private final DepartmentRepository departmentRepository;
+
+    private final EmployeeClient employeeClient;
 
     @GetMapping()
     public ResponseEntity<List<Department>> findAll(){
@@ -38,7 +40,7 @@ public class DepartmentController {
     @GetMapping("/{id}")
     public ResponseEntity<Department> findById(@PathVariable Long id){
         log.info("Find department by id: {}", id);
-        Department department = departmentRepository.findById(id);
+        Department department = departmentRepository.findById(id).orElseThrow(RuntimeException::new);
 
         return ResponseEntity.ok(department);
     }
@@ -46,9 +48,9 @@ public class DepartmentController {
     @PostMapping()
     public ResponseEntity<Department> add(@RequestBody Department department){
         log.info("Add department: {}", department);
-        Department newDepartment = departmentRepository.add(department);
+        Department newDepartment = departmentRepository.save(department);
 
-        return new ResponseEntity<Department>(department, HttpStatus.CREATED);
+        return new ResponseEntity<>(department, HttpStatus.CREATED);
     }
 
     @GetMapping("/with-employees")

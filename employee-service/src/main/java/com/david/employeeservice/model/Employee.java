@@ -1,4 +1,19 @@
 package com.david.employeeservice.model;
 
-public record Employee(Long id, Long departmentId, String name, int age, String position) {
+import lombok.Builder;
+import lombok.Data;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+@Data
+@Builder
+@Document(collection = "employee")
+public class Employee {
+    @Id
+    private Long id;
+    private Long departmentId;
+    private String name;
+    private int age;
+    String position;
+
 }
