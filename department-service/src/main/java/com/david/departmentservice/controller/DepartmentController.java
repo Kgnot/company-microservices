@@ -53,6 +53,7 @@ public class DepartmentController {
         return new ResponseEntity<>(department, HttpStatus.CREATED);
     }
 
+
     @GetMapping("/with-employees")
 //    @CircuitBreaker(name = DEPARTMENT_SERVICE, fallbackMethod = "fallbackCircuitBreakerFindAllWithEmployees")
 //    @Retry(name = DEPARTMENT_SERVICE, fallbackMethod = "fallbackRetryFindAllWithEmployees")

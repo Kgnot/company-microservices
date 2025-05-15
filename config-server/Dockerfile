@@ -1,0 +1,12 @@
+# Etapa 1: construir con Maven
+FROM maven:3.9.6-eclipse-temurin-17 AS builder
+WORKDIR /app
+COPY . .
+RUN mvn clean package -DskipTests
+
+# Etapa 2: usar solo el JAR ya construido
+FROM eclipse-temurin:17-jre
+WORKDIR /app
+COPY --from=builder /app/target/*.jar app.jar
+EXPOSE 8088
+ENTRYPOINT ["java", "-jar", "app.jar"]
