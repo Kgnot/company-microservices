@@ -1,5 +1,5 @@
 server:
-  port: 8761
+  port: 8761  # Render asignará su propio puerto, pero esto quedará como configuración interna
 
 spring:
   application:
@@ -7,9 +7,23 @@ spring:
 
 eureka:
   instance:
-    hostname: localhost
+    hostname: service-registry-pb.onrender.com  # Reemplaza con tu URL real de Eureka en Render
+    nonSecurePort: 443
+    securePortEnabled: true
+    preferIpAddress: false
+    statusPageUrl: https://${eureka.instance.hostname}/actuator/info
+    healthCheckUrl: https://${eureka.instance.hostname}/actuator/health
+    homePageUrl: https://${eureka.instance.hostname}/
   client:
-    register-with-eureka: false
-    fetch-registry: false
+    registerWithEureka: false  # No se registra a sí mismo (es el servidor)
+    fetchRegistry: false       # No necesita obtener registro de otros servidores
     serviceUrl:
-      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+      defaultZone: https://${eureka.instance.hostname}/eureka/  # HTTPS para Render
+  server:
+    enableSelfPreservation: false  # Desactiva la preservación para entornos cloud (opcional)
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"  # Expone endpoints de Actuator para monitoreo

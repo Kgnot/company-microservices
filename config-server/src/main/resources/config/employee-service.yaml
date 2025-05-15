@@ -4,7 +4,7 @@ server:
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://localhost:8761/eureka/
+      defaultZone: https://service-registry-pb.onrender.com/eureka/  # URL de tu Service Registry en Render
 
 management:
   tracing:
@@ -15,10 +15,3 @@ spring:
   cloud:
     discovery:
       enabled: true
-  data:
-    mongodb:
-      host: localhost
-      port: 27017
-      database: company
-      username: company
-      password: password
