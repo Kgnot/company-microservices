@@ -1,10 +1,16 @@
 server:
-  port: 8080
+  port: 8082
 
 eureka:
   client:
     serviceUrl:
-      defaultZone: https://service-registry-pb.onrender.com/eureka/  # URL de tu Service Registry en Render
+      defaultZone: http://service-registry:8761/eureka/
+    fetchRegistry: true
+    registerWithEureka: true
+  instance:
+    hostname: employee-service
+    preferIpAddress: false
+    instanceId: employee-service:${random.value}
 
 management:
   tracing:
@@ -22,6 +28,8 @@ management:
       show-details: always
 
 spring:
+  application:
+    name: employee-service
   cloud:
     discovery:
       enabled: true
@@ -32,7 +40,7 @@ resilience4j:
       departmentService:
         registerHealthIndicator: true
         eventConsumerBufferSize: 10
-        failureRateThresdhold: 50
+        failureRateThreshold: 50
         minimumNumberOfCalls: 5
         automaticTransitionFromOpenToHalfOpenEnabled: true
         waitDurationInOpenState: 5s
@@ -62,10 +70,3 @@ resilience4j:
       departmentService:
         maxWaitDuration: 5s
         maxConcurrentCalls: 5
-#  thread-pool-bulkhead:
-#    instances:
-#      departmentService:
-#        maxThreadPoolSize: 1
-#        coreThreadPoolSize: 1
-#        queueCapacity: 1
-
