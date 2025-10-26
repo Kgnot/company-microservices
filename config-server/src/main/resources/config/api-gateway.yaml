@@ -1,36 +1,37 @@
 server:
-  port: 8060  # Render asignará su propio puerto, pero esto quedará como configuración interna
+  port: 8060
 
 eureka:
   client:
     serviceUrl:
-      defaultZone: https://service-registry-pb.onrender.com/eureka/  # URL de tu Service Registry en Render
+      defaultZone: http://service-registry:8761/eureka/
     fetchRegistry: true
     registerWithEureka: true
   instance:
-    hostname: api-gateway-pb.onrender.com  # Reemplaza con tu URL de API Gateway en Render
-    nonSecurePort: 443
-    securePortEnabled: true
+    hostname: api-gateway
     preferIpAddress: false
-    statusPageUrl: https://${eureka.instance.hostname}/actuator/info
-    healthCheckUrl: https://${eureka.instance.hostname}/actuator/health
-    homePageUrl: https://${eureka.instance.hostname}/
-    instanceId: ${eureka.instance.hostname}
+    instanceId: api-gateway:${random.value}
+    statusPageUrlPath: /actuator/info
+    healthCheckUrlPath: /actuator/health
 
 management:
-  tracing:
-    sampling:
-      probability: 1.0
   endpoints:
     web:
       exposure:
-        include: "*"  # Expone todos los endpoints de Actuator para monitoreo
+        include: "*"
+  tracing:
+    sampling:
+      probability: 1.0
 
 spring:
   application:
-    name: api-gateway  # Asegúrate de que esté definido para registrarse en Eureka
+    name: api-gateway
   cloud:
     gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
       routes:
         - id: employee-service
           uri: lb://employee-service
