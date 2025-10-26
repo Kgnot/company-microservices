@@ -1,5 +1,35 @@
+# server:
+#   port: 8761  # Render asignará su propio puerto, pero esto quedará como configuración interna
+
+# spring:
+#   application:
+#     name: service-registry
+
+# eureka:
+#   instance:
+#     hostname: service-registry-pb.onrender.com  # Reemplaza con tu URL real de Eureka en Render
+#     nonSecurePort: 443
+#     securePortEnabled: true
+#     preferIpAddress: false
+#     statusPageUrl: https://${eureka.instance.hostname}/actuator/info
+#     healthCheckUrl: https://${eureka.instance.hostname}/actuator/health
+#     homePageUrl: https://${eureka.instance.hostname}/
+#   client:
+#     registerWithEureka: false  # No se registra a sí mismo (es el servidor)
+#     fetchRegistry: false       # No necesita obtener registro de otros servidores
+#     serviceUrl:
+#       defaultZone: https://${eureka.instance.hostname}/eureka/  # HTTPS para Render
+#   server:
+#     enableSelfPreservation: false  # Desactiva la preservación para entornos cloud (opcional)
+
+# management:
+#   endpoints:
+#     web:
+#       exposure:
+#         include: "*"  # Expone endpoints de Actuator para monitoreo
+
 server:
-  port: 8761  # Render asignará su propio puerto, pero esto quedará como configuración interna
+  port: 8761
 
 spring:
   application:
@@ -7,23 +37,15 @@ spring:
 
 eureka:
   instance:
-    hostname: service-registry-pb.onrender.com  # Reemplaza con tu URL real de Eureka en Render
-    nonSecurePort: 443
-    securePortEnabled: true
-    preferIpAddress: false
-    statusPageUrl: https://${eureka.instance.hostname}/actuator/info
-    healthCheckUrl: https://${eureka.instance.hostname}/actuator/health
-    homePageUrl: https://${eureka.instance.hostname}/
+    hostname: service-registry
   client:
-    registerWithEureka: false  # No se registra a sí mismo (es el servidor)
-    fetchRegistry: false       # No necesita obtener registro de otros servidores
-    serviceUrl:
-      defaultZone: https://${eureka.instance.hostname}/eureka/  # HTTPS para Render
+    registerWithEureka: false   # No se registra a sí mismo (es el servidor)
+    fetchRegistry: false        # No necesita consultar otros servidores
   server:
-    enableSelfPreservation: false  # Desactiva la preservación para entornos cloud (opcional)
+    enableSelfPreservation: false  # Opcional, útil para desarrollo (evita falsos positivos de desconexión)
 
 management:
   endpoints:
     web:
       exposure:
-        include: "*"  # Expone endpoints de Actuator para monitoreo
+        include: "*"  # Actuator visible (útil para debug)
