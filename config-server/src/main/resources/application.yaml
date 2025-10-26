@@ -6,3 +6,12 @@ spring:
     active: native
   application:
     name: config-server
+    
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://service-registry:8761/eureka/
+    fetchRegistry: true
+    registerWithEureka: true
+  instance:
+    hostname: config-server
