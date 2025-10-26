@@ -4,7 +4,13 @@ server:
 eureka:
   client:
     serviceUrl:
-      defaultZone: https://service-registry-pb.onrender.com/eureka/  # URL de tu Service Registry en Render
+      defaultZone: http://service-registry:8761/eureka/  # se comunica con el contenedor de Eureka
+    fetchRegistry: true
+    registerWithEureka: true
+  instance:
+    hostname: employee-service
+    preferIpAddress: false
+    instanceId: employee-service:${random.value}
 
 management:
   tracing:
@@ -12,6 +18,8 @@ management:
       probability: 1.0
 
 spring:
+  application:
+    name: employee-service
   cloud:
     discovery:
       enabled: true
